@@ -64,7 +64,7 @@ open class LBXScanWrapper: NSObject,AVCaptureMetadataOutputObjectsDelegate {
      - parameter success:      返回识别信息
      - returns:
      */
-    init( videoPreView:UIView,objType:[String] = [AVMetadataObjectTypeQRCode],isCaptureImg:Bool,cropRect:CGRect=CGRect.zero,success:@escaping ( ([LBXScanResult]) -> Void) )
+    public init( videoPreView:UIView,objType:[String] = [AVMetadataObjectTypeQRCode],isCaptureImg:Bool,cropRect:CGRect=CGRect.zero,success:@escaping ( ([LBXScanResult]) -> Void) )
     {
         do{
             input = try AVCaptureDeviceInput(device: device)
@@ -147,7 +147,7 @@ open class LBXScanWrapper: NSObject,AVCaptureMetadataOutputObjectsDelegate {
         
     }
     
-    func start()
+    open func start()
     {
         if !session.isRunning
         {
@@ -155,7 +155,7 @@ open class LBXScanWrapper: NSObject,AVCaptureMetadataOutputObjectsDelegate {
             session.startRunning()
         }
     }
-    func stop()
+    open func stop()
     {
         if session.isRunning
         {
@@ -349,7 +349,7 @@ open class LBXScanWrapper: NSObject,AVCaptureMetadataOutputObjectsDelegate {
     }
     
     //MARK: ------获取系统默认支持的码的类型
-    static func defaultMetaDataObjectTypes() ->[String]
+    static open func defaultMetaDataObjectTypes() ->[String]
     {
         var types =
         [AVMetadataObjectTypeQRCode,
