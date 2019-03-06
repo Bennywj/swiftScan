@@ -353,7 +353,7 @@ open class LBXScanView: UIView
     }
 
     //根据矩形区域，获取识别区域
-    static open func getScanRectWithPreView(preView:UIView, style:LBXScanViewStyle) -> CGRect
+    static public func getScanRectWithPreView(preView:UIView, style:LBXScanViewStyle) -> CGRect
     {
         let XRetangleLeft = style.xScanRetangleOffset;
         var sizeRetangle = CGSize(width: preView.frame.size.width - XRetangleLeft*2, height: preView.frame.size.width - XRetangleLeft*2)
@@ -436,7 +436,7 @@ open class LBXScanView: UIView
             self.activityView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
             
             activityView?.center = CGPoint(x: XRetangleLeft +  sizeRetangle.width/2 - 50, y: YMinRetangle + sizeRetangle.height/2)
-            activityView?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+            activityView?.style = UIActivityIndicatorView.Style.whiteLarge
             
             addSubview(activityView!)
             

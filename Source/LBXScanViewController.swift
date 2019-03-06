@@ -163,7 +163,7 @@ open class LBXScanViewController: UIViewController, UIImagePickerControllerDeleg
             
             let picker = UIImagePickerController()
             
-            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            picker.sourceType = UIImagePickerController.SourceType.photoLibrary
             
             picker.delegate = self;
             
@@ -174,15 +174,18 @@ open class LBXScanViewController: UIViewController, UIImagePickerControllerDeleg
     }
     
     //MARK: -----相册选择图片识别二维码 （条形码没有找到系统方法）
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
     {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         picker.dismiss(animated: true, completion: nil)
         
-        var image:UIImage? = info[UIImagePickerControllerEditedImage] as? UIImage
+        var image:UIImage? = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage
         
         if (image == nil )
         {
-            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
         }
         
         if(image != nil)
@@ -201,8 +204,8 @@ open class LBXScanViewController: UIViewController, UIImagePickerControllerDeleg
     func showMsg(title:String?,message:String?)
     {
         
-            let alertController = UIAlertController(title: nil, message:message, preferredStyle: UIAlertControllerStyle.alert)
-            let alertAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertActionStyle.default) { (alertAction) in
+            let alertController = UIAlertController(title: nil, message:message, preferredStyle: UIAlertController.Style.alert)
+            let alertAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertAction.Style.default) { (alertAction) in
                 
 //                if let strongSelf = self
 //                {
@@ -224,3 +227,13 @@ open class LBXScanViewController: UIViewController, UIImagePickerControllerDeleg
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}

@@ -58,12 +58,12 @@ class LBXPermissions: NSObject {
     //MARK:跳转到APP系统设置权限界面
     static func jumpToSystemPrivacySetting()
     {
-        let appSetting = URL(string:UIApplicationOpenSettingsURLString)
+        let appSetting = URL(string:UIApplication.openSettingsURLString)
         
         if appSetting != nil
         {
             if #available(iOS 10, *) {
-                UIApplication.shared.open(appSetting!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(appSetting!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             }
             else{
                 UIApplication.shared.openURL(appSetting!)
@@ -71,4 +71,9 @@ class LBXPermissions: NSObject {
         }
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

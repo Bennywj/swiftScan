@@ -61,7 +61,7 @@ class MainTableViewController: UITableViewController,UIImagePickerControllerDele
      func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         //objc_msgSend对应方法好像没有
-        let sel = NSSelectorFromString(arrayItems[indexPath.row].last!)
+        _ = NSSelectorFromString(arrayItems[indexPath.row].last!)
         
         
         self.InnerStyle()
@@ -347,7 +347,7 @@ class MainTableViewController: UITableViewController,UIImagePickerControllerDele
     {
         let picker = UIImagePickerController()
         
-        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        picker.sourceType = UIImagePickerController.SourceType.photoLibrary
         
         picker.delegate = self;
         
@@ -357,15 +357,15 @@ class MainTableViewController: UITableViewController,UIImagePickerControllerDele
     }
     
     //MARK: -----相册选择图片识别二维码 （条形码没有找到系统方法）
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+    private  func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
         picker.dismiss(animated: true, completion: nil)
         
-        var image:UIImage? = info[UIImagePickerControllerEditedImage] as? UIImage
+        var image:UIImage? = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage
         
         if (image == nil )
         {
-            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage
         }
         
         if(image == nil)
@@ -390,9 +390,9 @@ class MainTableViewController: UITableViewController,UIImagePickerControllerDele
     
     func showMsg(title:String?,message:String?)
     {
-        let alertController = UIAlertController(title: title, message:message, preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: title, message:message, preferredStyle: UIAlertController.Style.alert)
         
-        let alertAction = UIAlertAction(title:  "知道了", style: UIAlertActionStyle.default) { (alertAction) -> Void in
+        let alertAction = UIAlertAction(title:  "知道了", style: UIAlertAction.Style.default) { (alertAction) -> Void in
             
            
         }
@@ -408,4 +408,9 @@ class MainTableViewController: UITableViewController,UIImagePickerControllerDele
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
